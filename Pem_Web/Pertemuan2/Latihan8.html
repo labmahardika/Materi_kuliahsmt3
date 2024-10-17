@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latihan 8</title>
+  </head>
+  <body>
+    <form method="get">
+      <table border="1">
+        <tr>
+          <td><label for="name">Nama</label></td>
+          <td>
+            <input
+              type="text"
+              name="nama"
+              id="name"
+              placeholder="Isikan Nama Anda"
+            /><br />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="email">Email</label></td>
+          <td>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Isikan Email Anda"
+            /><br />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="nohp">No HP</label></td>
+          <td>
+            <input
+              name="nohp"
+              id="nohp"
+              type="text"
+              pattern="0-9"
+              value="082170735116"
+              readonly
+            /><br />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="lahir">Tgl Lahir</label></td>
+          <td><input name="ttl" id="lahir" type="date" /><br /></td>
+        </tr>
+        <tr>
+          <td>
+            <label for="gender">Gender</label>
+          </td>
+          <td>
+            <input type="radio" name="jkel" value="Pria" id="Pria" />
+            <label for="Pria">Pria</label>
+            <input type="radio" name="jkel" value="Wanita" id="wanita" />
+            <label for="wanita">Wanita</label>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="hobby">Hobby</label></td>
+          <td>
+            <input type="checkbox" name="hobby1" id="hobby1" value="Sleeping" />
+            <label for="hobby1">Sleeping</label>
+            <input type="checkbox" name="hobby2" id="hobby2" value="Coding" />
+            <label for="hobby2">Coding</label>
+            <input
+              type="checkbox"
+              name="hobby3"
+              id="hobby3"
+              value="Mabar DOTA2"
+            />
+            <label for="hobby3">Mabar DOTA2</label>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="file">Upload CV</label></td>
+          <td><input type="file" name="file" id="file" /></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" value="Submit" />
+          </td>
+          <td>
+            <input type="reset" value="Reset" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
