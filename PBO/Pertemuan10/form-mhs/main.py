@@ -13,14 +13,19 @@ from kivy.lang.builder import Builder
 class InputForm(BoxLayout):
     def show_data(self):
         # Ambil data dari text input
+        
         nama = self.ids.nama_input.text
         nim = self.ids.nim_input.text
         jurusan = self.ids.jurusan_input.text
-
+        #Validasi Inputan tidak kosong
+        if not nama or not nim or not jurusan:
+            popup = Popup(title="Error", content=Label(text="Semua field harus diisi."), size_hint=(0.8, 0.4), auto_dismiss=True)
+            popup.open()
+            return
+        
         # Format data untuk ditampilkan
         data = f"Nama: {nama}\nNIM: {nim}\nJurusan: {jurusan}"
-        
-        popup_content = BoxLayout(orientation="vertical", padding=10, spacing=10)
+    
 
         # Buat PopUp
         popup = Popup(
