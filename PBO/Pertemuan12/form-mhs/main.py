@@ -9,6 +9,15 @@ from kivy.utils import get_color_from_hex
 import mysql.connector
 
 class InputForm(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.mydb = mysql.connector.connect(
+            host    = "localhost",
+            user    = "root",
+            password= "",
+            database="sikampus"
+    )
+        self.mycursor = self.mydb.cursor()
     def show_data(self):
         # Ambil data dari text input
         nama = self.ids.nama_input.text
@@ -22,8 +31,6 @@ class InputForm(BoxLayout):
         
         # Format data untuk ditampilkan
         data = f"Nama: {nama}\nNIM: {nim}\nJurusan: {jurusan}"
-    
-
         # Buat PopUp
         popup = Popup(
             title="Data Mahasiswa",
@@ -37,17 +44,45 @@ class InputForm(BoxLayout):
         close_btn.bind(on_release=popup.dismiss)
         popup.content.add_widget(close_btn)
 
+        
         # Tampilkan pop-up
         popup.open()
+        # Membuat Koneksi Ke Database
 
+        sql = "INSERT INTO tbl_mahasiswa VALUES (%s, %s, %s)"
+        val = (nama, nim, jurusan)
+        self.mycursor.execute(sql, val)
+        self.mydb.commit()
+        
+        # Bersihkan text input
+        self.ids.nama_input.text = ""
+        self.ids.nim_input.text = ""
+        self.ids.jurusan_input.text = ""
+        self.show_Table()
+    def show_Table(self):
+        self.mycursor.execute("SELECT * FROM tbl_mahasiswa")
+        myresult = self.mycursor.fetchall()
+        self.ids.table.clear_widgets()
+        self.ids.table.add_widget(Label(text="Data Mahasiswa"))
+        self.ids.tabel_mahasiswa.add_widget(Label(text="Nama", bold=True))
+        self.ids.tabel_mahasiswa.add_widget(Label(text="Nim", bold=True))
+        self.ids.tabel_mahasiswa.add_widget(Label(text="Jurusan", bold=True))
+        
+        for i in myresult:
+            self.ids.tabel_mahasiswa.add_widget(Label(text=f"{i[0]}"))
+            self.ids.tabel_mahasiswa.add_widget(Label(text=f"{i[1]}"))
+            self.ids.tabel_mahasiswa.add_widget(Label(text=f"{i[2]}"))
+        
 class form(App):
     def build(self):
         self.get_color_from_hex = get_color_from_hex # Utility Warna
-        return InputForm()
+        self.root_widget = InputForm()
+        return
 
     def on_start(self):
         Window.size = (600, 600)
         self.title = "Formulir Pendaftaran Mahasiswa"
+        self.icon = 'logo.png'
 
 if __name__ == "__main__":
     form().run()

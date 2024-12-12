@@ -12,91 +12,124 @@
             pos: self.pos
             size: self.size
     
-    Image:
-        source:'logo.png'
-        size_hint_y: None
-        height: 150
+    # Membuat Boxlayout untuk Form InputForm:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.4
+        Image:
+            source:'logo.png'
+            size_hint_y: None
+            height: 150
 
-    Label:
-        text: "Form Data Mahasiswa"
-        font_size: 24
-        size_hint_y: 0.2 #None
-        height: 40
-        bold: True
-        color: app.get_color_from_hex("#3B554A")
+        Label:
+            text: "Form Data Mahasiswa"
+            font_size: 24
+            size_hint_y: 0.2 #None
+            height: 40
+            bold: True
+            color: app.get_color_from_hex("#3B554A")
 
-    Label:
-        text: "Nama Lengkap:"
-        halign: "left"
-        multiline: False
-        text_size: self.size
-        size_hint_y: None
-        padding_x: 5
-        height: 15
-        color: app.get_color_from_hex("#3B554A")
+        Label:
+            text: "Nama Lengkap:"
+            halign: "left"
+            multiline: False
+            text_size: self.size
+            size_hint_y: None
+            padding_x: 5
+            height: 15
+            color: app.get_color_from_hex("#3B554A")
 
-    TextInput:
-        id: nama_input
-        hint_text: "Nama"
-        multiline: False
-        size_hint_y: None
-        padding_x: 15
-        padding_y: 10
-        height: 40
+        TextInput:
+            id: nama_input
+            hint_text: "Nama"
+            multiline: False
+            size_hint_y: None
+            padding_x: 15
+            padding_y: 10
+            height: 40
+            write_tab: False
+            multiline: False
 
-    Widget:
-        size_hint_y: None
-        height: 5
+        Widget:
+            size_hint_y: None
+            height: 5
 
-    Label:
-        text: "NPM/NIM:"
-        halign: "left"
-        multiline: False
-        text_size: self.size
-        size_hint_y: None
-        padding_x: 5
-        height: 15
-        color: app.get_color_from_hex("#3B554A")
+        Label:
+            text: "NPM/NIM:"
+            halign: "left"
+            multiline: False
+            text_size: self.size
+            size_hint_y: None
+            padding_x: 5
+            height: 15
+            
+            color: app.get_color_from_hex("#3B554A")
 
-    TextInput:
-        id: nim_input
-        hint_text: "NIM"
-        multiline: False
-        size_hint_y: None
-        padding_x: 15
-        padding_y: 10
-        height: 40
+        TextInput:
+            id: nim_input
+            hint_text: "NIM"
+            multiline: False
+            size_hint_y: None
+            padding_x: 15
+            padding_y: 10
+            height: 40
+            write_tab: False
+            multiline: False
 
-    Widget:
-        size_hint_y: None
-        height: 5
+        Widget:
+            size_hint_y: None
+            height: 5
 
-    Label:
-        text: "Jurusan:"
-        halign: "left"
-        multiline: False
-        text_size: self.size
-        size_hint_y: None
-        padding_x: 5
-        height: 15
-        color: app.get_color_from_hex("#3B554A")
+        Label:
+            text: "Jurusan:"
+            halign: "left"
+            multiline: False
+            text_size: self.size
+            size_hint_y: None
+            padding_x: 5
+            height: 15
+            color: app.get_color_from_hex("#3B554A")
 
-    TextInput:
-        id: jurusan_input
-        hint_text: "Jurusan"
-        multiline: False
-        size_hint_y: None
-        padding_x: 15        
-        padding_y: 10
-        height: 40
+        TextInput:
+            id: jurusan_input
+            hint_text: "Jurusan"
+            multiline: False
+            size_hint_y: None
+            padding_x: 15        
+            padding_y: 10
+            height: 40
+            write_tab: False
+            multiline: False
 
-    Widget:
-        size_hint_y: None
-        height: 5
+        Widget:
+            size_hint_y: None
+            height: 5
 
-    Button:
-        text: "Submit"
-        size_hint_y: None
-        height: 40
-        on_release: root.show_data()
+        Button:
+            text: "Submit"
+            size_hint_y: None
+            height: 40
+            on_release: root.show_data()
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.6
+        canvas.before:
+            color:
+                rgba: 0,0,0,1
+            line: 
+                width: 1.5
+                rectangle: self.x, self.y, self.width, self.height
 
+            Label:
+                text: "Tabel Mahasiswa"
+                size_hint: None
+                height: 30
+        ScrollView:
+            GridLayout:
+                id: tabel_mahasiswa
+                cols: 3
+                size_hint_y: None 
+                height: self.minimum_height
+                row_default_height: 30
+                row_force_default: True    
+            
