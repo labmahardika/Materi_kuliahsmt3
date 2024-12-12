@@ -1,6 +1,6 @@
 #(hapus # salah 1) #:import get_color_from_hex kivy.utils.get_color_from_hex # Import dari file kv langsung
 <InputForm>:
-    orientation: "vertical"
+    orientation: "horizontal"
     padding: 40
     spacing: 5
     font_name: "Poppins.ttf"
@@ -14,7 +14,7 @@
     
     # Membuat Boxlayout untuk Form InputForm:
     BoxLayout:
-        orientation: 'vertical'
+        orientation:"vertical"
         size_hint: 0.4
         Image:
             source:'logo.png'

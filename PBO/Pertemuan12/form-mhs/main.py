@@ -59,7 +59,7 @@ class InputForm(BoxLayout):
         self.ids.nim_input.text = ""
         self.ids.jurusan_input.text = ""
         self.show_Table()
-    def show_Table(self):
+    def show_table(self):
         self.mycursor.execute("SELECT * FROM tbl_mahasiswa")
         myresult = self.mycursor.fetchall()
         self.ids.table.clear_widgets()
@@ -69,20 +69,23 @@ class InputForm(BoxLayout):
         self.ids.tabel_mahasiswa.add_widget(Label(text="Jurusan", bold=True))
         
         for i in myresult:
-            self.ids.tabel_mahasiswa.add_widget(Label(text=f"{i[0]}"))
-            self.ids.tabel_mahasiswa.add_widget(Label(text=f"{i[1]}"))
-            self.ids.tabel_mahasiswa.add_widget(Label(text=f"{i[2]}"))
+            for item in i:
+                self.ids.tabel_mahasiswa.add_widget(Label(text=item))
         
 class form(App):
     def build(self):
         self.get_color_from_hex = get_color_from_hex # Utility Warna
         self.root_widget = InputForm()
-        return
-
+        return self.root_widget
+    def on_close(self):
+        self.mydb.close()
+        self.mycursor.close()
     def on_start(self):
         Window.size = (600, 600)
         self.title = "Formulir Pendaftaran Mahasiswa"
         self.icon = 'logo.png'
-
+        self.root_widget.show_table()
+    def on_stop(self):
+        self.root_widget.on_close()
 if __name__ == "__main__":
     form().run()
