@@ -1,135 +1,76 @@
-#(hapus # salah 1) #:import get_color_from_hex kivy.utils.get_color_from_hex # Import dari file kv langsung
 <InputForm>:
     orientation: "horizontal"
-    padding: 40
-    spacing: 5
-    font_name: "Poppins.ttf"
-
+    padding: 20
+    spacing: 20
     canvas.before:
         Color:
-            rgba: 173, 216, 230, 1
+            rgba: 255, 255, 255, 1  # RGBA untuk light blue
         Rectangle:
             pos: self.pos
             size: self.size
-    
-    # Membuat Boxlayout untuk Form InputForm:
+
     BoxLayout:
-        orientation:"vertical"
-        size_hint: 0.4
+        orientation: "vertical"
+        size_hint_x: 0.4
         Image:
             source:'logo.png'
             size_hint_y: None
             height: 150
-
         Label:
-            text: "Form Data Mahasiswa"
-            font_size: 24
-            size_hint_y: 0.2 #None
-            height: 40
-            bold: True
-            color: app.get_color_from_hex("#3B554A")
-
-        Label:
-            text: "Nama Lengkap:"
-            halign: "left"
-            multiline: False
-            text_size: self.size
+            text: "Nama:"
             size_hint_y: None
-            padding_x: 5
-            height: 15
-            color: app.get_color_from_hex("#3B554A")
+            height: 30
+            color: 0, 0 , 0 , 1
 
         TextInput:
             id: nama_input
-            hint_text: "Nama"
             multiline: False
-            size_hint_y: None
-            padding_x: 15
-            padding_y: 10
-            height: 40
-            write_tab: False
-            multiline: False
-
-        Widget:
-            size_hint_y: None
-            height: 5
 
         Label:
-            text: "NPM/NIM:"
-            halign: "left"
-            multiline: False
-            text_size: self.size
+            text: "NIM:"
             size_hint_y: None
-            padding_x: 5
-            height: 15
-            
-            color: app.get_color_from_hex("#3B554A")
-
+            height: 30
+            color: 0, 0 , 0 , 1
         TextInput:
             id: nim_input
-            hint_text: "NIM"
             multiline: False
-            size_hint_y: None
-            padding_x: 15
-            padding_y: 10
-            height: 40
-            write_tab: False
-            multiline: False
-
-        Widget:
-            size_hint_y: None
-            height: 5
+            
 
         Label:
             text: "Jurusan:"
-            halign: "left"
-            multiline: False
-            text_size: self.size
             size_hint_y: None
-            padding_x: 5
-            height: 15
-            color: app.get_color_from_hex("#3B554A")
-
+            height: 30
+            color: 0, 0 , 0 , 1
         TextInput:
             id: jurusan_input
-            hint_text: "Jurusan"
             multiline: False
-            size_hint_y: None
-            padding_x: 15        
-            padding_y: 10
-            height: 40
-            write_tab: False
-            multiline: False
-
-        Widget:
-            size_hint_y: None
-            height: 5
 
         Button:
-            text: "Submit"
+            text: "Tambah Data"
             size_hint_y: None
             height: 40
-            on_release: root.show_data()
-    BoxLayout:
-        orientation: 'vertical'
-        size_hint: 0.6
-        canvas.before:
-            color:
-                rgba: 0,0,0,1
-            line: 
-                width: 1.5
-                rectangle: self.x, self.y, self.width, self.height
+            on_release: root.show_table()
 
-            Label:
-                text: "Tabel Mahasiswa"
-                size_hint: None
-                height: 30
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x: 0.6
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1  # Warna border tabel (hitam)
+            Line:
+                width: 1.5  # Ketebalan border
+                rectangle: self.x, self.y, self.width, self.height
+        Label:
+            text: "Tabel Mahasiswa"
+            size_hint_y: None
+            height: 30
+            color: 0, 0 , 0 , 1
+
         ScrollView:
             GridLayout:
                 id: tabel_mahasiswa
                 cols: 3
-                size_hint_y: None 
+                size_hint_y: None
                 height: self.minimum_height
                 row_default_height: 30
-                row_force_default: True    
-            
+                row_force_default: True
