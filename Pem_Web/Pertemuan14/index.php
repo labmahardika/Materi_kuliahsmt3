@@ -90,7 +90,7 @@ function tableMahasiswa($connect) {
             <th>Aksi</th>
         </tr>
     ";
-    $result = $connect->query("SELECT * FROM tbl_mahasiswa");
+    $result = $connect->query("SELECT * FROM tampilmhs");
     if ($result && $result->num_rows > 0) {
         $no = 1;
         while ($row = $result->fetch_assoc()) {
