@@ -1,14 +1,16 @@
 <?php
 include('dbConnection.php'); // Memanggil file koneksi database
+
 // Ambil Data untuk Edit
 $editData = null;
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
     $result = $connect->query("SELECT * FROM tbl_mahasiswa WHERE nim='$id'");
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $editData = $result->fetch_assoc();
     }
 }
+
 // Create & Update Data
 if (isset($_POST['submit'])) {
     $nim = $_POST['nim'];
@@ -18,10 +20,10 @@ if (isset($_POST['submit'])) {
 
     if ($old_nim) {
         // Update Data
-        $query = "UPDATE tbl_mahasiswa SET nama='$nama', jurusan='$jurusan' WHERE nim='$nim'";
+        $query = "UPDATE tbl_mahasiswa SET nama='$nama', jurusan='$jurusan' WHERE nim='$old_nim'";
     } else {
         // Create Data
-        $query = "INSERT INTO tbl_mahasiswa (nama, nim, jurusan) VALUES ('$nama', '$nim', '$jurusan')";
+        $query = "INSERT INTO tbl_mahasiswa (nim, nama, jurusan) VALUES ('$nim', '$nama', '$jurusan')";
     }
 
     if ($connect->query($query)) {
@@ -40,28 +42,23 @@ if (isset($_GET['delete'])) {
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
+
 // Fungsi Menampilkan Form
-function formMahasiswa( $data=null) {
-    $id = $data ? $data['nim'] : '';
-    $nim = $data ? $data['nim'] : '';
-    $nama = $data ? $data['nama'] : '';
-    $jurusan = $data ? $data['jurusan'] : '';
+function formMahasiswa($data = null) {
+    $nim = $data['nim'] ?? '';
+    $nama = $data['nama'] ?? '';
+    $jurusan = $data['jurusan'] ?? '';
     $buttonLabel = $data ? "Update" : "Simpan";
-    if ($buttonLabel == "Update") {
-        $readonly = "readonly";     
-    } else {
-        $readonly = "";
-    }
+    $readonly = $data ? "readonly" : "";
+
     echo "
     <h1>Form Mahasiswa</h1>
     <form method='POST'>
-    <input type='hidden' name='old_nim' value='<?= $nim ?>'>
-
-    
+        <input type='hidden' name='old_nim' value='$nim'>
         <table>
             <tr>
                 <td>NIM</td>
-                <td><input type='text' name='nim' value= '$nim'  $readonly required></td>
+                <td><input type='text' name='nim' value='$nim' $readonly required></td>
             </tr>
             <tr>
                 <td>Nama</td>
@@ -94,7 +91,7 @@ function tableMahasiswa($connect) {
         </tr>
     ";
     $result = $connect->query("SELECT * FROM tbl_mahasiswa");
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $no = 1;
         while ($row = $result->fetch_assoc()) {
             echo "
