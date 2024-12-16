@@ -5,7 +5,7 @@ include "dbConnection.php";
 
 if (isset($_GET['delete'])) {
     $nim = $_GET['delete'];
-    $sql = "DELETE FROM mahasiswa WHERE nim = $nim";
+    $sql = "DELETE FROM tbl_mahasiswa WHERE nim = $nim";
     $connect->query($sql);
     header("Location: index.php");
     exit();
@@ -50,7 +50,7 @@ function tampilTabel($connect)
             <td>{$row['nim']}</td>
             <td>{$row['nama']}</td>
             <td>{$row['jurusan']}</td>
-            <td><a href='?delete={$row['nim']} onClick='return confirm('Are you sure?')'>Delete</a>
+            <td><a href='?delete={$row['nim']}' onClick='return confirm(`Are you sure?`)'>Delete</a>
             <a href='?update={$row['nim']}'>Update</a></td>
             </tr>
             ";
