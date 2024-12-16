@@ -1,71 +1,97 @@
 <?php
-// Memnaggil File dbConnection.php sebagai Global Var
-include "dbConnection.php";
-// Membuat Operasi Delete Data
-if (isset($_GET['delete'])) {
-    $nim = $_GET['delete'];
-    $sql = "DELETE FROM tbl_mahasiswa WHERE nim = '$nim'";
-    $connect->query($sql);
-    header("Location: index.php");
-    exit();
-}
-// Membuat Operasi Insert dan Update
+include('dbConnection.php'); // Memanggil file koneksi database
+// Ambil Data untuk Edit
 $editData = null;
 if (isset($_GET['edit'])) {
-    $nim = $_GET['edit'];
-    $result = $connect->query("SELECT * FROM tbl_mahasiswa WHERE nim = $nim");
+    $id = $_GET['edit'];
+    $result = $connect->query("SELECT * FROM tbl_mahasiswa WHERE nim='$id'");
     if ($result->num_rows > 0) {
         $editData = $result->fetch_assoc();
     }
 }
-// Membuat Operasi Insert dan Update
+// Create & Update Data
 if (isset($_POST['submit'])) {
     $nim = $_POST['nim'];
     $nama = $_POST['nama'];
     $jurusan = $_POST['jurusan'];
-    if (isset($_POST['nim']) && $_POST['nim'] != '') {
-        $nim = $_POST['nim'];
-        $sql = "UPDATE tbl_mahasiswa SET nama = '$nama', jurusan = '$jurusan' WHERE nim = $nim";
+    $old_nim = $_POST['old_nim'] ?? null;
+
+    if ($old_nim) {
+        // Update Data
+        $query = "UPDATE tbl_mahasiswa SET nama='$nama', jurusan='$jurusan' WHERE nim='$nim'";
     } else {
-        $sql = "INSERT INTO tbl_mahasiswa (nim, nama, jurusan) VALUES (`$nim`, `$nama`, `$jurusan`)";
+        // Create Data
+        $query = "INSERT INTO tbl_mahasiswa (nama, nim, jurusan) VALUES ('$nama', '$nim', '$jurusan')";
     }
-    $connect->query($sql);
-    header("Location: index.php");
+
+    if ($connect->query($query)) {
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    } else {
+        echo "Error: " . $connect->error;
+    }
+}
+
+// Delete Data
+if (isset($_GET['delete'])) {
+    $nim = $_GET['delete'];
+    $query = "DELETE FROM tbl_mahasiswa WHERE nim='$nim'";
+    $connect->query($query);
+    header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
-// Membuat Form Mahasiwa
-function formMahasiswa($data = null)
-{
+// Fungsi Menampilkan Form
+function formMahasiswa( $data=null) {
     $id = $data ? $data['nim'] : '';
-    $name = $data ? $data['nama'] : '';
+    $nim = $data ? $data['nim'] : '';
+    $nama = $data ? $data['nama'] : '';
     $jurusan = $data ? $data['jurusan'] : '';
-    $buttonLabel = $data ? 'Edit' : 'Submit';
+    $buttonLabel = $data ? "Update" : "Simpan";
+    if ($buttonLabel == "Update") {
+        $readonly = "readonly";     
+    } else {
+        $readonly = "";
+    }
     echo "
-<h1>Form Mahasiswa</h1>
-<form  method='POST'>
-<table border='1'>
-<tr><td><label for='nim' >NIM</label></td>
-    <td><input type='text' value='$id' name='nim' id='nim' required></td></tr>
-<tr><td><label for='nama'>NAMA</label></td>
-    <td><input type='text' name='nama' value='$name' id='nama' required></td></tr>
-<tr><td><label for='jurusan'>JURUSAN</label></td>
-    <td><input type='text' name='jurusan' value='$jurusan' id='jurusan' required></td></tr>
-<tr><td></td><td><button type='submit' name='submit'>$buttonLabel</button></td></tr>
-</table>
-</form>";
+    <h1>Form Mahasiswa</h1>
+    <form method='POST'>
+    <input type='hidden' name='old_nim' value='<?= $nim ?>'>
+
+    
+        <table>
+            <tr>
+                <td>NIM</td>
+                <td><input type='text' name='nim' value= '$nim'  $readonly required></td>
+            </tr>
+            <tr>
+                <td>Nama</td>
+                <td><input type='text' name='nama' value='$nama' required></td>
+            </tr>
+            <tr>
+                <td>Jurusan</td>
+                <td><input type='text' name='jurusan' value='$jurusan' required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type='submit' name='submit'>$buttonLabel</button></td>
+            </tr>
+        </table>
+    </form>
+    ";
 }
-function tampilTabel($connect)
-{
+
+// Fungsi Menampilkan Tabel
+function tableMahasiswa($connect) {
     echo "
-    <h1>Tabel Mahasiswa</h1>
-    <table border='1'>
-    <tr>
-    <th>No</th>
-    <th>NIM</th>
-    <th>NAMA</th>
-    <th>JURUSAN</th>
-    <th>Aksi</th>
-    </tr>
+    <h1>Data Mahasiswa</h1>
+    <table border='1' cellspacing='0' cellpadding='5'>
+        <tr>
+            <th>No</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Jurusan</th>
+            <th>Aksi</th>
+        </tr>
     ";
     $result = $connect->query("SELECT * FROM tbl_mahasiswa");
     if ($result->num_rows > 0) {
@@ -73,21 +99,25 @@ function tampilTabel($connect)
         while ($row = $result->fetch_assoc()) {
             echo "
             <tr>
-            <td>{$no}</td>
-            <td>{$row['nim']}</td>
-            <td>{$row['nama']}</td>
-            <td>{$row['jurusan']}</td>
-            <td><a href='?delete={$row['nim']}' onClick='return confirm(`Are you sure?`)'>Delete</a>
-            <a href='?edit={$row['nim']}'>Edit</a></td>
+                <td>{$no}</td>
+                <td>{$row['nim']}</td>
+                <td>{$row['nama']}</td>
+                <td>{$row['jurusan']}</td>
+                <td>
+                    <a href='?edit={$row['nim']}'>Edit</a>
+                    <a href='?delete={$row['nim']}' onclick='return confirm(\"Yakin ingin menghapus?\")'>Delete</a>
+                </td>
             </tr>
             ";
             $no++;
         }
     } else {
-        echo "0 results";
+        echo "<tr><td colspan='5'>Tidak ada data.</td></tr>";
     }
     echo "</table>";
 }
-// Panggil Function
+
+// Menampilkan Form dan Tabel
 formMahasiswa($editData);
-tampilTabel($connect);
+tableMahasiswa($connect);
+?>
