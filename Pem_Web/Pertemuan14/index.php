@@ -12,7 +12,8 @@ function formMahasiswa()
     <td><input type='text' name='nama' id='nama'></td></tr>
 <tr><td><label for='jurusan'>JURUSAN</label></td>
     <td><input type='text' name='jurusan' id='jurusan'></td></tr>
-<tr><td><input type='submit' value='Submit'></td>
+<tr><td></td><td><input type='submit' value='Submit'></td></tr>
 </table>
 </form>";
 }
+formMahasiswa();
