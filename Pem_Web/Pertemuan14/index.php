@@ -23,11 +23,11 @@ if (isset($_POST['submit'])) {
     $nim = $_POST['nim'];
     $nama = $_POST['nama'];
     $jurusan = $_POST['jurusan'];
-    if (isset($_POST['nim']) && $_POST['nim'] != "") {
+    if (isset($_POST['nim']) && $_POST['nim'] != '') {
         $nim = $_POST['nim'];
         $sql = "UPDATE tbl_mahasiswa SET nama = '$nama', jurusan = '$jurusan' WHERE nim = $nim";
     } else {
-        $sql = "INSERT INTO tbl_mahasiswa (nim, nama, jurusan) VALUES ('$nim', '$nama', '$jurusan')";
+        $sql = "INSERT INTO tbl_mahasiswa (nim, nama, jurusan) VALUES (`$nim`, `$nama`, `$jurusan`)";
     }
     $connect->query($sql);
     header("Location: index.php");
@@ -45,11 +45,11 @@ function formMahasiswa($data = null)
 <form  method='POST'>
 <table border='1'>
 <tr><td><label for='nim' >NIM</label></td>
-    <td><input type='text' value='$id' name='nim' id='nim'></td></tr>
+    <td><input type='text' value='$id' name='nim' id='nim' required></td></tr>
 <tr><td><label for='nama'>NAMA</label></td>
-    <td><input type='text' name='nama' value='$name' id='nama'></td></tr>
+    <td><input type='text' name='nama' value='$name' id='nama' required></td></tr>
 <tr><td><label for='jurusan'>JURUSAN</label></td>
-    <td><input type='text' name='jurusan' value='$jurusan' id='jurusan'></td></tr>
+    <td><input type='text' name='jurusan' value='$jurusan' id='jurusan' required></td></tr>
 <tr><td></td><td><button type='submit' name='submit'>$buttonLabel</button></td></tr>
 </table>
 </form>";
