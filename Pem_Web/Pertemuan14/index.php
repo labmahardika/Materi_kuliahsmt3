@@ -1,4 +1,6 @@
 <?php
+// Memnaggil File dbConnection.php sebagai Global Var
+include "dbConnection.php";
 // Membuat Form Mahasiwa
 function formMahasiswa()
 {
@@ -16,4 +18,41 @@ function formMahasiswa()
 </table>
 </form>";
 }
+function tampilTabel($connect)
+{
+    echo "
+    <h1>Tabel Mahasiswa</h1>
+    <table border='1'>
+    <tr>
+    <th>No</th>
+    <th>NIM</th>
+    <th>NAMA</th>
+    <th>JURUSAN</th>
+    <th>Aksi</th>
+    </tr>
+    ";
+    $result = $connect->query("SELECT * FROM tbl_mahasiswa");
+    if ($result->num_rows > 0) {
+        $no = 1;
+        while ($row = $result->fetch_assoc()) {
+            echo "
+            <tr>
+            <td>{$no}</td>
+            <td>{$row['nim']}</td>
+            <td>{$row['nama']}</td>
+            <td>{$row['jurusan']}</td>
+            <td><a href='?edit={$row['nim']}'>Edit</a></td>
+            <td><a href='?update={$row['nim']}'>Update</a></td>
+            
+            </tr>
+            ";
+            $no++;
+        }
+    } else {
+        echo "0 results";
+    }
+    echo "</table>";
+}
+// Panggil Function
 formMahasiswa();
+tampilTabel($connect);
