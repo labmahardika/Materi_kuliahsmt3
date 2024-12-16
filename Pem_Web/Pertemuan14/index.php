@@ -41,9 +41,8 @@ function tampilTabel($connect)
             <td>{$row['nim']}</td>
             <td>{$row['nama']}</td>
             <td>{$row['jurusan']}</td>
-            <td><a href='?edit={$row['nim']}'>Edit</a></td>
-            <td><a href='?update={$row['nim']}'>Update</a></td>
-            
+            <td><a href='?delete={$row['nim']}'>Delete</a>
+            <a href='?update={$row['nim']}'>Update</a></td>
             </tr>
             ";
             $no++;
