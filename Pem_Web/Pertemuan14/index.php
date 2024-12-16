@@ -1,6 +1,15 @@
 <?php
 // Memnaggil File dbConnection.php sebagai Global Var
 include "dbConnection.php";
+// Membuat Operasi Delete Data
+
+if (isset($_GET['delete'])) {
+    $nim = $_GET['delete'];
+    $sql = "DELETE FROM mahasiswa WHERE nim = $nim";
+    $connect->query($sql);
+    header("Location: index.php");
+    exit();
+}
 // Membuat Form Mahasiwa
 function formMahasiswa()
 {
@@ -41,7 +50,7 @@ function tampilTabel($connect)
             <td>{$row['nim']}</td>
             <td>{$row['nama']}</td>
             <td>{$row['jurusan']}</td>
-            <td><a href='?delete={$row['nim']}'>Delete</a>
+            <td><a href='?delete={$row['nim']} onClick='return confirm('Are you sure?')'>Delete</a>
             <a href='?update={$row['nim']}'>Update</a></td>
             </tr>
             ";
