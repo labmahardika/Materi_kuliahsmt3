@@ -1,6 +1,5 @@
 -- Cek Event SCHEDULER
 SHOW VARIABLES LIKE 'event_scheduler';
-
 -- Set Event SCHEDULER
 SET GLOBAL event_scheduler = ON;
 

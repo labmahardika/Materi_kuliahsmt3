@@ -74,7 +74,7 @@ class InputForm(BoxLayout):
 
     def show_table(self):
         # Ambil data dari database
-        self.mycursor.execute("SELECT * FROM tbl_mahasiswa order by nim")
+        self.mycursor.execute("SELECT * FROM tampilmhs")
         data_mahasiswa = self.mycursor.fetchall()
 
         # Hapus widget di tabel sebelumnya

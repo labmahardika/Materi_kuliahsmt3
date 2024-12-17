@@ -3,4 +3,3 @@
 CREATE VIEW cek_stok AS 
 SELECT * FROM tbl_barang WHERE 
 stok=0;
-# Memanggil View cek_stok

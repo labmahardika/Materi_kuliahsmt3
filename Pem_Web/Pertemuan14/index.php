@@ -44,7 +44,8 @@ if (isset($_GET['delete'])) {
 }
 
 // Fungsi Menampilkan Form
-function formMahasiswa($data = null) {
+function formMahasiswa($data = null)
+{
     $nim = $data['nim'] ?? '';
     $nama = $data['nama'] ?? '';
     $jurusan = $data['jurusan'] ?? '';
@@ -78,7 +79,8 @@ function formMahasiswa($data = null) {
 }
 
 // Fungsi Menampilkan Tabel
-function tableMahasiswa($connect) {
+function tableMahasiswa($connect)
+{
     echo "
     <h1>Data Mahasiswa</h1>
     <table border='1' cellspacing='0' cellpadding='5'>
@@ -117,4 +119,3 @@ function tableMahasiswa($connect) {
 // Menampilkan Form dan Tabel
 formMahasiswa($editData);
 tableMahasiswa($connect);
-?>
