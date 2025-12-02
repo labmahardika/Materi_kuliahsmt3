@@ -1,0 +1,77 @@
+.table-bordered {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+.table-bordered th {
+    background-color: #f2f2f2;
+}
+.table-bordered tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.table-bordered tr:hover {
+    background-color: #e0e0e0;
+}
+
+.judul {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}   
+a {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+    }
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 16px;
+    margin: 16px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.form{
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+}
+
+label {
+      
+    font-weight: bold;
+    text-align: center;
+}   
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
